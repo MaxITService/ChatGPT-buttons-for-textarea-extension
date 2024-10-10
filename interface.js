@@ -32,7 +32,7 @@
             checkbox.addEventListener('change', (event) => {
                 onChangeCallback(event.target.checked);
                 localStorage.setItem(id, event.target.checked);
-                console.log(`[Chatgpt-Buttons] ${labelText} ${event.target.checked ? 'enabled' : 'disabled'}`);
+                logConCgp(`${labelText} ${event.target.checked ? 'enabled' : 'disabled'}`);
             });
 
             return toggleContainer;

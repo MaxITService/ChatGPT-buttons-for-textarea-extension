@@ -5,11 +5,11 @@
 (function(window) {
     'use strict';
 
-    console.log('[Chatgpt-Buttons] Events script loaded.');
+    logConCgp('Events script loaded.');
 
     // Function to handle path changes
     function handlePathChange() {
-        console.log('[Chatgpt-Buttons] Path change detected. Re-initializing script...');
+        logConCgp('Path change detected. Re-initializing script...');
         if (typeof window.initChatgptButtons === 'function') {
             window.initChatgptButtons();
         } else {
@@ -39,7 +39,7 @@
             subtree: true
         });
 
-        console.log('[Chatgpt-Buttons] MutationObserver for path changes has been set up.');
+        logConCgp('MutationObserver for path changes has been set up.');
     }
 
     // Alternative method: Override history methods to detect path changes
@@ -57,7 +57,7 @@
             handlePathChange();
         };
 
-        console.log('[Chatgpt-Buttons] History methods overridden to detect path changes.');
+        logConCgp('History methods overridden to detect path changes.');
     }
 
     // Initialize path change detection
@@ -67,7 +67,7 @@
 
         // Also listen to the popstate event
         window.addEventListener('popstate', handlePathChange);
-        console.log('[Chatgpt-Buttons] popstate event listener added.');
+        logConCgp('popstate event listener added.');
     }
 
     // Start path change detection

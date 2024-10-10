@@ -5,7 +5,8 @@
 (function(window, MaxExtensionConfig, MaxExtensionUtils, MaxExtensionButtons, MaxExtensionInterface) {
     'use strict';
 
-    console.log('[Chatgpt-Buttons] Extension version: 1.0');
+    // Log the extension version
+    logConCgp('Extension version: 1.0');
 
     // Function to check if modifications already exist
     function modsExist() {
@@ -15,24 +16,24 @@
     // Function to handle custom send button click
     function handleCustomSend(event, customText, autoSend) {
         event.preventDefault();
-        console.log('[Chatgpt-Buttons] Custom send button clicked.');
+        logConCgp('Custom send button clicked.');
 
         // Re-find the original send button
         const originalButton = document.querySelector('button[data-testid="send-button"][aria-label="Send prompt"]');
-        console.log('[Chatgpt-Buttons] Original send button re-found:', originalButton);
+        logConCgp('Original send button re-found:', originalButton);
 
         // Get the editor div where the user types the message
         const editorDiv = document.querySelector('#prompt-textarea');
-        console.log('[Chatgpt-Buttons] Editor div found:', editorDiv);
+        logConCgp('Editor div found:', editorDiv);
 
         if (editorDiv && originalButton) {
             // Get the current text from the editor
             const currentText = editorDiv.innerText.trim();
-            console.log('[Chatgpt-Buttons] Current text in editor:', currentText);
+            logConCgp('Current text in editor:', currentText);
 
             // Combine the current text with the custom text
             const combinedText = currentText + ' ' + customText;
-            console.log('[Chatgpt-Buttons] Combined text to insert:', combinedText);
+            logConCgp('Combined text to insert:', combinedText);
 
             // Insert the combined text into the editor
             MaxExtensionUtils.insertTextIntoEditor(editorDiv, combinedText);
@@ -42,13 +43,13 @@
                 setTimeout(() => {
                     // Simulate a comprehensive click on the original send button
                     MaxExtensionUtils.simulateClick(originalButton);
-                    console.log('[Chatgpt-Buttons] Original send button clicked.');
+                    logConCgp('Original send button clicked.');
                 }, 50); // Delay of 50 ms before sending
             } else {
-                console.log('[Chatgpt-Buttons] Auto-send disabled. Message not sent automatically.');
+                logConCgp('Auto-send disabled. Message not sent automatically.');
             }
         } else {
-            console.error('[Chatgpt-Buttons] Editor div or original send button not found. Cannot send message.');
+            logConCgp('Editor div or original send button not found. Cannot send message.');
         }
     }
 
@@ -64,7 +65,7 @@
             }
         );
         container.appendChild(autoSendToggle);
-        console.log('[Chatgpt-Buttons] Auto-send toggle created and added');
+        logConCgp('Auto-send toggle created and added');
 
         // Add Hotkeys toggle
         const hotkeysToggle = MaxExtensionInterface.createToggle(
@@ -76,7 +77,7 @@
             }
         );
         container.appendChild(hotkeysToggle);
-        console.log('[Chatgpt-Buttons] Hotkeys toggle created and added');
+        logConCgp('Hotkeys toggle created and added');
     }
 
     // Function to create and add custom buttons
@@ -85,11 +86,11 @@
             if (buttonConfig.separator) {
                 const separator = MaxExtensionUtils.createSeparator();
                 container.appendChild(separator);
-                console.log('[Chatgpt-Buttons] Separator created and added');
+                logConCgp('Separator created and added');
             } else {
                 const customSendButton = MaxExtensionButtons.createCustomSendButton(buttonConfig, index, handleCustomSend);
                 container.appendChild(customSendButton);
-                console.log(`[Chatgpt-Buttons] Custom send button ${index + 1} created:`, customSendButton);
+                logConCgp(`Custom send button ${index + 1} created:`, customSendButton);
             }
         });
     }
@@ -116,18 +117,18 @@
 
         const resiliencyInterval = setInterval(() => {
             iterations++;
-            console.log(`[Chatgpt-Buttons] Resiliency check iteration ${iterations}/${maxIterations}`);
+            logConCgp(`Resiliency check iteration ${iterations}/${maxIterations}`);
 
             if (!modsExist()) {
-                console.log('[Chatgpt-Buttons] Custom elements are missing. Initiating resiliency enforcement.');
+                logConCgp('Custom elements are missing. Initiating resiliency enforcement.');
                 clearInterval(resiliencyInterval);
                 enforceResiliency();
             } else {
-                console.log('[Chatgpt-Buttons] Custom elements are present.');
+                logConCgp('Custom elements are present.');
             }
 
             if (iterations >= maxIterations) {
-                console.log('[Chatgpt-Buttons] Resiliency checks completed without detecting missing elements.');
+                logConCgp('Resiliency checks completed without detecting missing elements.');
                 clearInterval(resiliencyInterval);
             }
         }, intervalDuration);
@@ -135,23 +136,24 @@
 
     // Function to enforce resiliency by re-initializing without resiliency checks
     function enforceResiliency() {
-        console.log('[Chatgpt-Buttons] EnforceResiliency called. Re-initializing without resiliency checks.');
+        logConCgp('EnforceResiliency called. Re-initializing without resiliency checks.');
         init(false); // Initialize without resiliency checks
     }
 
     // Function to initialize the script
     function init(enableResiliency = true) {
-        console.log('[Chatgpt-Buttons] Initializing script...');
+        logConCgp('Initializing script...');
         if (modsExist() && !enableResiliency) {
-            console.log('[Chatgpt-Buttons] Modifications already exist. Skipping initialization.');
+            logConCgp('Modifications already exist. Skipping initialization.');
             return;
         }
 
         // Load saved toggle states
         MaxExtensionInterface.loadToggleStates();
+        logConCgp('Toggle states loaded.');
 
         MaxExtensionUtils.waitForElement('div.flex.w-full.flex-col.gap-1\\.5.rounded-\\[26px\\].p-1\\.5.transition-colors.bg-\\[\\#f4f4f4\\].dark\\:bg-token-main-surface-secondary', (targetDiv) => {
-            console.log('[Chatgpt-Buttons] Target div found:', targetDiv);
+            logConCgp('Target div found:', targetDiv);
 
             // Create and add custom send buttons
             const customButtonsContainer = document.createElement('div');
@@ -171,7 +173,7 @@
 
             // Insert the custom buttons container at the end of the target div
             targetDiv.appendChild(customButtonsContainer);
-            console.log('[Chatgpt-Buttons] Custom send buttons, separators, auto-send toggle, and hotkeys toggle inserted into the DOM.');
+            logConCgp('Custom send buttons, separators, auto-send toggle, and hotkeys toggle inserted into the DOM.');
 
             if (enableResiliency) {
                 // Start resiliency checks
@@ -182,20 +184,20 @@
 
     // Function to initialize the script with a delay and check for existing modifications
     function initScript() {
-        console.log('[Chatgpt-Buttons] InitScript called. Waiting 500ms before initialization...');
+        logConCgp('InitScript called. Waiting 500ms before initialization...');
         setTimeout(() => {
-            console.log('[Chatgpt-Buttons] 500ms delay completed. Checking for existing modifications...');
+            logConCgp('500ms delay completed. Checking for existing modifications...');
             if (!modsExist()) {
-                console.log('[Chatgpt-Buttons] No existing modifications found. Starting initialization...');
+                logConCgp('No existing modifications found. Starting initialization...');
                 init();
 
                 // Add event listener for keyboard shortcuts
                 if (MaxExtensionConfig.enableShortcuts) {
                     window.addEventListener('keydown', handleKeyboardShortcuts);
-                    console.log('[Chatgpt-Buttons] Keyboard shortcuts enabled and event listener added.');
+                    logConCgp('Keyboard shortcuts enabled and event listener added.');
                 }
             } else {
-                console.log('[Chatgpt-Buttons] Modifications already exist. Skipping initialization.');
+                logConCgp('Modifications already exist. Skipping initialization.');
             }
         }, 500);
     }
