@@ -1,20 +1,28 @@
 {
-    "manifest_version": 3,
-    "name": "Max Extension",
-    "description": "Base Level Extension by Max From Max!",
-    "version": "1.0",
-    "action": {
-      "default_popup": "hello.html",
-      "default_icon": "logo.png"
-    },
-    "content_scripts": [
-      {
-        "js": ["content.js"],
-        "matches": [
-          "https://chat.openai.com/*",
-          "https://chatgpt.com/*"
-        ]
-      }
+  "manifest_version": 3,
+  "name": "Max Extension",
+  "description": "Base Level Extension by Max From Max!",
+  "version": "1.0",
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": "logo.png"
+  },
+"content_scripts": [
+  {
+    "matches": [
+      "https://chat.openai.com/*",
+      "https://chatgpt.com/*"
+    ],
+    "js": [
+      "log.js",
+      "config.js",
+      "events.js",
+      "utils.js",
+      "buttons.js",
+      "interface.js",
+      "init.js",
+      "content.js"
     ]
   }
-  
+]
+}
