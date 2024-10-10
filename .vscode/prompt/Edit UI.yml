@@ -1,0 +1,21 @@
+name: Edit Chrome UI
+instruction: |
+  this is jsut first attempt to ui. It looks somewhat correctly, but seems to not work
+  Tasks: Bigger UI. 
+  Bigger Text edit areas. Save and reset button at top.
+  Add separator button.
+  Messages like <Configuration saved succesfully> and <failed to save>
+  Last saved: if not saved should read <never>
+  Items can be re-arranged via drag and drop.
+  Think, will it work? Not saves or not loads not. What can be enchanced? 
+  Probably both saving and loading could log what happened. A save button should 
+  force re-initialization. Re-initialization in this case should update already existing
+  buttons, not stop on encountering them.
+
+files:
+  - hello.html
+  - hello-page-script.js
+  - hello-page-style.css
+  - config.js
+  - log.js
+  - init.js

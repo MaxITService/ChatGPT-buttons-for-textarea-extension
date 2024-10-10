@@ -1,0 +1,12 @@
+name: Make logging the better logging
+instruction: >
+  This is chrome extension. I wroten a new file, log.js. Rewrite this, so it
+  uses a function in log.js that writes logs to console. And log.js... you have
+  to write it yourself. There lies best pratce logging in console. But all logs
+  are written as user logs. (not warnings). Then I will completely rewrite files to use this log, but now,
+  I will only start with a single file. Log file should tell how to use it's function. Also use fucntion name like 
+  logConCGP. Log file has commment stating that all files should now use this logging.
+
+files:
+  - init.js
+  - log.js
