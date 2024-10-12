@@ -1,16 +1,44 @@
 // init.js
-// Version: 1.0
+// Version: 1.1
 // Instructions for AI: do not remove comments! MUST NOT REMOVE COMMENTS.
 
 (function(window, MaxExtensionConfig, MaxExtensionUtils, MaxExtensionButtons, MaxExtensionInterface) {
     'use strict';
 
     // Log the extension version
-    logConCgp('Extension version: 1.0');
+    logConCgp('Extension version: 1.1');
 
     // Function to check if modifications already exist
     function modsExist() {
         return document.querySelector('[data-testid^="custom-send-button-"]') !== null;
+    }
+
+    // Function to detect the active website
+    function getActiveWebsite() {
+        const hostname = window.location.hostname;
+
+        if (hostname.includes('chat.openai.com') || hostname.includes('chatgpt.com')) {
+            return 'ChatGPT';
+        } else if (hostname.includes('claude.ai')) {
+            return 'Claude';
+        } else {
+            return 'Unknown';
+        }
+    }
+
+    // Initialization function for ChatGPT
+    function initScriptCGPT(enableResiliency = true) {
+        logConCgp('Initializing ChatGPT script...');
+        // Existing initialization logic for ChatGPT
+        init(enableResiliency); // Assuming `init` is specific to ChatGPT
+    }
+
+    // Stub initialization function for Claude
+    function initScriptClaude(enableResiliency = true) {
+        logConCgp('Initializing Claude script...');
+        // TODO: Implement Claude-specific initialization logic
+        // Example:
+        // initClaude(enableResiliency);
     }
 
     // Function to handle custom send button click
@@ -152,6 +180,8 @@
         MaxExtensionInterface.loadToggleStates();
         logConCgp('Toggle states loaded.');
 
+        // Adjust the selector based on the active website if necessary
+        // For now, using the existing selector as in the previous implementation
         MaxExtensionUtils.waitForElement('div.flex.w-full.flex-col.gap-1\\.5.rounded-\\[26px\\].p-1\\.5.transition-colors.bg-\\[\\#f4f4f4\\].dark\\:bg-token-main-surface-secondary', (targetDiv) => {
             logConCgp('Target div found:', targetDiv);
 
@@ -188,14 +218,32 @@
         setTimeout(() => {
             logConCgp('500ms delay completed. Checking for existing modifications...');
             if (!modsExist()) {
-                logConCgp('No existing modifications found. Starting initialization...');
-                init();
+                logConCgp('No existing modifications found. Detecting active website...');
+                const activeWebsite = getActiveWebsite();
 
-                // Add event listener for keyboard shortcuts
-                if (MaxExtensionConfig.enableShortcuts) {
-                    window.addEventListener('keydown', handleKeyboardShortcuts);
-                    logConCgp('Keyboard shortcuts enabled and event listener added.');
+                switch (activeWebsite) {
+                    case 'ChatGPT':
+                        logConCgp('Active website detected: ChatGPT');
+                        initScriptCGPT();
+                        break;
+                    case 'Claude':
+                        logConCgp('Active website detected: Claude');
+                        initScriptClaude();
+                        break;
+                    default:
+                        logConCgp('Active website not supported. Initialization aborted.');
                 }
+
+                // Add event listener for keyboard shortcuts if supported
+                if (activeWebsite === 'ChatGPT' && MaxExtensionConfig.enableShortcuts) {
+                    window.addEventListener('keydown', handleKeyboardShortcuts);
+                    logConCgp('Keyboard shortcuts enabled and event listener added for ChatGPT.');
+                }
+                // Similarly, add keyboard shortcuts for Claude when implemented
+                // else if (activeWebsite === 'Claude' && MaxExtensionConfig.enableShortcuts) {
+                //     window.addEventListener('keydown', handleClaudeKeyboardShortcuts);
+                //     logConCgp('Keyboard shortcuts enabled and event listener added for Claude.');
+                // }
             } else {
                 logConCgp('Modifications already exist. Skipping initialization.');
             }
