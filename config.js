@@ -12,8 +12,7 @@
         enableShortcuts: true, // Global hotkeys state
 
         customButtons: [
-            // Thinking and explanation buttons
-           
+            // Thinking and explanation buttons           
             { icon: '🧐', text: ' Explain this concept or process in detail. Make Easier to understand.', autoSend: true },
             { icon: '💡', text: ' <Rewrite this text, keeping all original information. Add explanations to non-obvious concepts only, don\'t explain basic things, only explain advanced concepts, like you would explain to an advanced expert, just this particular field is new to him.', autoSend: true },
             { separator: true },
