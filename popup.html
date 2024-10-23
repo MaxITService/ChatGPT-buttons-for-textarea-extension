@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Max Extension Settings</title>
+    <link rel="stylesheet" href="popup-page-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Management Section -->
+        <div class="profile-section neuromorphic">
+            <h2>Profile Management</h2>
+            <div class="profile-controls">
+                <select id="profileSelect" class="neuromorphic-select">
+                    <option value="default">Default Profile</option>
+                </select>
+                <div class="profile-buttons">
+                    <button id="addProfile" class="neuromorphic-button">Add Profile</button>
+                    <button id="deleteProfile" class="neuromorphic-button danger">Delete Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button Configuration Section -->
+        <div class="buttons-section neuromorphic">
+            <h2>Button Configuration</h2>
+            <div class="button-controls">
+                <div class="button-input-group">
+                    <input type="text" id="buttonIcon" class="neuromorphic-input" placeholder="Button Emoji" maxlength="2">
+                    <textarea id="buttonText" class="neuromorphic-input" placeholder="Button Template Text"></textarea>
+                    <div class="button-actions">
+                        <button id="addButton" class="neuromorphic-button">Add Button</button>
+                        <button id="addSeparator" class="neuromorphic-button">Add Separator</button>
+                    </div>
+                </div>
+                <div id="buttonList" class="button-list" data-draggable="true">
+                    <!-- Buttons will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="settings-section neuromorphic">
+            <h2>Settings</h2>
+            <div class="settings-controls">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="autoSendToggle">
+                    <span class="slider"></span>
+                    <span class="toggle-label">Enable Auto-send</span>
+                </label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="shortcutsToggle">
+                    <span class="slider"></span>
+                    <span class="toggle-label">Enable Shortcuts</span>
+                </label>
+            </div>
+            <div class="settings-buttons">
+                <button id="revertDefault" class="neuromorphic-button warning">Revert to Default</button>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="console-section neuromorphic">
+            <h2>Console</h2>
+            <div id="console" class="console-output"></div>
+        </div>
+
+        <!-- Save Status -->
+        <div class="save-status" id="saveStatus">
+            Last saved: Never
+        </div>
+    </div>
+    <script src="log.js"></script>
+    <script src="popup-page-script.js"></script>
+</body>
+</html>
