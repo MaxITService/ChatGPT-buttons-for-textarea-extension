@@ -4,5 +4,5 @@
 
 (function() {
     'use strict';
-    console.log('Max Extension Content Script Version: 1.0');
+ 
 })();
